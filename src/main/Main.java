@@ -2,12 +2,12 @@ package main;
 
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.stage.Stage;
 import player.GrandDa;
 import player.GrandMa;
 import player.Player;
-import scene.SceneManager;
+import scenes.roomscene.RoomScene;
+import system.SceneManager;
 import type.GameTime;
 
 public class Main extends Application {
@@ -19,10 +19,15 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		SceneManager.setStage(primaryStage);
-		SceneManager.goToRoomScene();
+		SceneManager.moveScene(new RoomScene());
 	}
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+	@Override
+	public void stop() {
+		System.exit(0);
 	}
 }

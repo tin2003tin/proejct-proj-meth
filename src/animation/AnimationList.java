@@ -16,19 +16,23 @@ public class AnimationList {
         return head == null;
     }
 
-    public void addAnimation(String url,double width, double height,double layoutX, double layoutY) {
+    public void addAFrame(String url,double width, double height,double layoutX, double layoutY) {
         AnimationNode newNode = new AnimationNode(url,width,height,layoutX,layoutY);
         if (isEmpty()) {
             head = newNode;
             tail = newNode;
             tail.setNext(head);
             current = head;
-            newNode.setNext(head);
-            tail = newNode;
         } else {
             tail.setNext(newNode);
-            newNode.setNext(head);
-            tail = newNode;
+        }
+        newNode.setNext(head);
+        tail = newNode;
+    }
+
+    public void addAnimation(String[] urls ,double width, double height,double layoutX, double layoutY) {
+        for (String url: urls) {
+            addAFrame(url,width,height,layoutX,layoutY);
         }
     }
 

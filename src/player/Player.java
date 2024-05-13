@@ -1,10 +1,10 @@
 package player;
 
 import animation.PlayerAnimation;
-import type.PlayerDirection;
+import type.interfaces.Moveable;
 import type.PlayerType;
 
-abstract public class Player  {
+abstract public class Player implements Moveable {
 
     private int max_health;
     private int health;

@@ -1,0 +1,361 @@
+@startuml
+class main.Main {
++ {static} Player player1
++ {static} Player player2
++ {static} boolean editMode
++ {static} GameTime gameTime
++ void start(Stage)
++ {static} void main(String[])
++ void stop()
+}
+
+
+class gui.ControlGrid {
+- GridPane createPlayerControls(String,String,String,String,String,String)
+- Circle addKeyWithCircleBackground(GridPane,String,int,int)
+- Text createKeyText(String)
+}
+
+abstract class player.Player {
+- int max_health
+- int health
+~ PlayerAnimation playerAnimation
+- double playerSpeed
+- double jumpPower
+- double knockback
+- double attack
++ double getPlayerSpeed()
++ void setPlayerSpeed(double)
++ int getHealth()
++ void setHealth(int)
++ PlayerAnimation getPlayerAnimation()
++ void setPlayerAnimation(PlayerAnimation)
++ int getMax_health()
++ void setMax_health(int)
+~ {abstract}void initAnimation()
++ {abstract}void setDefault()
++ double getJumpPower()
++ void setJumpPower(double)
++ double getKnockback()
++ void setKnockback(double)
++ double getAttack()
++ void setAttack(double)
+}
+
+
+class gui.GameIcon {
++ {static} ImageView startButton(double)
++ {static} ImageView parseButton(double)
++ {static} ImageView stopButton(double)
++ {static} ImageView gameoverIcon(double,double)
++ {static} ImageView newgameIcon(double)
++ {static} ImageView fullHeart(int)
++ {static} ImageView halfHeart(int)
++ {static} ImageView emptyHeart(int)
++ {static} ImageView redPotion(double)
++ {static} ImageView bluePotion(double)
++ {static} ImageView yellowPotion(double)
+}
+
+class type.constant.Settings {
++ {static} int DEFAULT_SCENE_WIDTH
++ {static} int DEFAULT_SCENE_HEIGHT
++ {static} int DEFAULT_BG_WIDTH
++ {static} int DEFAULT_BG_HEIGHT
++ {static} int GROUND_HEIGHT
+}
+
+class player.GrandMa {
++ {static} int MAX_HEALTH
++ {static} double SPEED
++ {static} double ATTACK
++ {static} double JUMP_POWER
++ {static} double KNOCKBACK
++ {static} int ANIMANTION_DELAY
++ void move(KeyCode)
++ void attack(KeyCode)
++ void jump(KeyCode)
++ void stop(KeyCode)
+~ void initAnimation()
++ void setDefault()
+}
+
+
+class scenes.fightscene.FightLogic {
+- FightScene view
++ void setView(FightScene)
++ void update()
+- void movePlayer(Player)
+- boolean canPlayerMove(Player,PlayerDirection,double)
+- void attackPlayer(Player,Player)
+}
+
+
+class player.GrandDa {
++ {static} int MAX_HEALTH
++ {static} double SPEED
++ {static} double ATTACK
++ {static} double JUMP_POWER
++ {static} double KNOCKBACK
++ {static} int ANIMANTION_DELAY
++ void move(KeyCode)
++ void jump(KeyCode)
++ void attack(KeyCode)
++ void stop(KeyCode)
+~ void initAnimation()
++ void setDefault()
+}
+
+
+enum type.PlayerDirection {
++  UP
++  DOWN
++  RIGHT
++  LEFT
+}
+
+class system.SceneManager {
+- {static} Stage mainStage
+- {static} Thread gameThread
++ {static} void setStage(Stage)
++ {static} void moveScene(GameScene)
++ {static} void startSceneScript(SceneLogic)
++ {static} void addPlayerToScene(Pane,int,int,int,int)
+}
+
+
+class gui.Room {
+- String URL
+- {static} int DEFAULT_SIZE
++ void setDimensions(double,double)
++ void setBackgroundImage(String)
+}
+
+
+class gui.HealthBar {
+}
+enum type.GameTime {
++  NightTime
++  DayLight
+}
+
+class animation.AnimationList {
+- AnimationNode head
+- AnimationNode tail
+- int duration
+- AnimationNode current
++ boolean isEmpty()
++ void addAFrame(String,double,double,double,double)
++ void addAnimation(String[],double,double,double,double)
++ void ResetNode()
++ AnimationNode getNextAnimation()
++ int getDuration()
++ void setDuration(int)
++ AnimationNode getCurrent()
+}
+
+
+enum type.PlayerType {
++  GrandMa
++  GrandDa
+}
+
+class animation.AnimationNode {
+- ImageView imageView
+- AnimationNode next
++ ImageView getImageView()
++ void setImageView(ImageView)
++ AnimationNode getNext()
++ void setNext(AnimationNode)
+}
+
+
+class scenes.fightscene.FightScene {
+- HealthBar healthBar1
+- HealthBar healthBar2
+- {static} String[] BACKGROUND_NIGHT_TIME_IMAGES
+- {static} String[] BACKGROUND_DAY_TIME_IMAGES
++ void initscene()
+- void setBackground()
+- String getRandomImagePath()
+- void initChangeBGButton()
+- void initChangeSceneButton()
++ void inithealthBars()
++ void setPlayerListener()
+~ void endedScene()
+- void initBackButton()
+}
+
+
+interface type.interfaces.SceneLogic {
+~ void update()
+}
+
+enum type.PlayerAction {
++  UP_STAY
++  UP_WALK
++  DOWN_STAY
++  DOWN_WALK
++  RIGHT_STAY
++  RIGHT_WALK
++  LEFT_STAY
++  LEFT_WALK
++  RIGHT_ATTACK
++  LEFT_ATTACK
+}
+
+class scenes.roomscene.RoomScene {
+- {static} double scaleFactor
+- {static} int ACTUAL_ROOM_SIZE
+- {static} double ROOM_SIZE
++ void initscene()
+- void setBackground()
+- void initRooms()
+- void initControlGrid()
+- Room createRoom()
+- void initEditButton()
++ void setPlayerListener()
+}
+
+
+class gui.PlayerModel {
+- double moveDistanceX
+- double moveDistanceY
+- boolean isMovingUp
+- boolean isMovingDown
+- boolean isMovingLeft
+- boolean isMovingRight
+- boolean isRightAttacking
+- boolean isLeftAttacking
+- boolean isOnGround
+- boolean isJump
+- double initialSpeed
+- boolean attackRight
+- boolean attackLeft
+- double forcePX
+- double forceNX
+- boolean isShow
++ void setDimensions(double,double)
++ void setModel(ImageView)
++ void clearModel()
++ void setDefault()
++ double getX()
++ void setX(double)
++ double getY()
++ void setY(double)
++ void setLocation(double,double)
++ double getMoveDistanceX()
++ void setMoveDistanceX(double)
++ double getMoveDistanceY()
++ void setMoveDistanceY(double)
++ boolean isMovingUp()
++ void setMovingUp(boolean)
++ boolean isMovingDown()
++ void setMovingDown(boolean)
++ boolean isMovingLeft()
++ void setMovingLeft(boolean)
++ boolean isMovingRight()
++ void setMovingRight(boolean)
++ boolean isRightAttacking()
++ void setRightAttacking(boolean)
++ boolean isLeftAttacking()
++ void setLeftAttacking(boolean)
++ boolean isOnGround()
++ void setOnGround(boolean)
++ boolean isJump()
++ void setJump(boolean)
++ double getInitialSpeed()
++ void setInitialSpeed(double)
++ void decreaseSpeed(double)
++ boolean isAttackRight()
++ void setAttackRight(boolean)
++ boolean isAttackLeft()
++ void setAttackLeft(boolean)
++ double getForcePX()
++ void setForcePX(double)
++ double getForceNX()
++ void setForceNX(double)
++ boolean isShow()
++ void setShow(boolean)
+}
+
+
+class animation.EditFleid {
+- void createEditGrandMaGrid()
+- void createEditGrandDaGrid()
+- void removeEditGrid()
+}
+
+interface type.interfaces.Moveable {
++ void move(KeyCode)
++ void stop(KeyCode)
++ void attack(KeyCode)
++ void jump(KeyCode)
+}
+
+class animation.PlayerAnimation {
+- PlayerType playerType
+- PlayerDirection playerDirection
+- PlayerModel model
+- double hitblock
+- Map<PlayerAction,AnimationList> animationMap
+- Thread animantionThread
+- int attackCount
+- int animantionCount
+- int animantionDelay
++ void initModel(ImageView)
++ void initAnimantionThread()
++ void changeAnimantion()
++ void setAnimation(PlayerAction)
++ void addPlayerAnimation(PlayerAction,AnimationList)
++ PlayerType getPlayerType()
++ void setPlayerType(PlayerType)
++ PlayerDirection getPlayerDirection()
++ void setPlayerDirection(PlayerDirection)
++ PlayerModel getModel()
++ void setModel(PlayerModel)
++ Map<PlayerAction,AnimationList> getAnimationMap()
++ Thread getAnimantionThread()
++ int getAnimantionCount()
++ void setAnimantionCount(int)
++ double getHitblock()
++ void setHitblock(double)
++ int getAnimantionDelay()
++ void setAnimantionDelay(int)
+}
+
+
+abstract class system.GameScene {
+- SceneLogic script
++ SceneLogic getScript()
++ void setScript(SceneLogic)
++ {abstract}void initscene()
++ {abstract}void setPlayerListener()
+}
+
+
+class scenes.roomscene.RoomLogic {
++ void update()
+- void movePlayer(Player)
+- void checkSleep()
+- void checkgameStart()
+- boolean canPlayerMove(Player,PlayerDirection,double)
+}
+
+
+
+javafx.application.Application <|-- main.Main
+javafx.scene.layout.Pane <|-- gui.ControlGrid
+type.interfaces.Moveable <|.. player.Player
+player.Player <|-- player.GrandMa
+type.interfaces.SceneLogic <|.. scenes.fightscene.FightLogic
+player.Player <|-- player.GrandDa
+javafx.scene.layout.Pane <|-- gui.Room
+javafx.scene.layout.HBox <|-- gui.HealthBar
+system.GameScene <|-- scenes.fightscene.FightScene
+system.GameScene <|-- scenes.roomscene.RoomScene
+javafx.scene.layout.Pane <|-- gui.PlayerModel
+javafx.scene.layout.Pane <|-- animation.EditFleid
+javafx.scene.layout.Pane <|-- system.GameScene
+type.interfaces.SceneLogic <|.. scenes.roomscene.RoomLogic
+@enduml
