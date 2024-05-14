@@ -1,6 +1,8 @@
 @startuml
 class animation.grandma.DownWalk {
++ <<Create>> DownWalk()
 }
+
 class main.Main {
 + {static} Player player1
 + {static} Player player2
@@ -13,6 +15,7 @@ class main.Main {
 
 
 class gui.ControlGrid {
++ <<Create>> ControlGrid()
 - GridPane createPlayerControls(String,String,String,String,String,String)
 - Circle addKeyWithCircleBackground(GridPane,String,int,int)
 - Text createKeyText(String)
@@ -26,6 +29,7 @@ abstract class player.Player {
 - double jumpPower
 - double knockback
 - double attack
++ <<Create>> Player(PlayerType,int,int,double,double,double)
 + double getPlayerSpeed()
 + void setPlayerSpeed(double)
 + int getHealth()
@@ -54,7 +58,9 @@ class type.constant.Settings {
 }
 
 class animation.grandda.RightWalk {
++ <<Create>> RightWalk()
 }
+
 class player.GrandMa {
 + {static} int MAX_HEALTH
 + {static} double SPEED
@@ -62,6 +68,7 @@ class player.GrandMa {
 + {static} double JUMP_POWER
 + {static} double KNOCKBACK
 + {static} int ANIMANTION_DELAY
++ <<Create>> GrandMa()
 + void move(KeyCode)
 + void attack(KeyCode)
 + void jump(KeyCode)
@@ -72,11 +79,14 @@ class player.GrandMa {
 
 
 class animation.grandma.UpStay {
++ <<Create>> UpStay()
 }
+
 class system.AudioManager {
 - Hashtable<String,Media> audioData
 - MediaPlayer loopPlayer
 - {static} AudioManager instance
+- <<Create>> AudioManager()
 + {static} AudioManager getInstance()
 + void loadAudio()
 + void addAudio(String,String)
@@ -109,25 +119,31 @@ class system.SceneManager {
 class gui.Room {
 - String URL
 - {static} int DEFAULT_SIZE
++ <<Create>> Room()
 + void setDimensions(double,double)
 + void setBackgroundImage(String)
 }
 
 
 class gui.HealthBar {
++ <<Create>> HealthBar(int,int,int)
 }
+
 enum type.GameTime {
 +  NightTime
 +  DayLight
 }
 
 class animation.grandda.LeftStay {
++ <<Create>> LeftStay()
 }
+
 class animation.AnimationList {
 - AnimationNode head
 - AnimationNode tail
 - int duration
 - AnimationNode current
++ <<Create>> AnimationList()
 + {static} AnimationList fromAnimationData(AnimationData)
 + boolean isEmpty()
 + void addFrame(String,double,double,double,double)
@@ -148,6 +164,7 @@ enum type.PlayerType {
 class animation.AnimationNode {
 - ImageView imageView
 - AnimationNode next
++ <<Create>> AnimationNode(String,double,double,double,double)
 + ImageView getImageView()
 + void setImageView(ImageView)
 + AnimationNode getNext()
@@ -156,12 +173,15 @@ class animation.AnimationNode {
 
 
 class animation.grandda.UpStay {
++ <<Create>> UpStay()
 }
+
 class scenes.fightscene.FightScene {
 - HealthBar healthBar1
 - HealthBar healthBar2
 - {static} String[] BACKGROUND_NIGHT_TIME_IMAGES
 - {static} String[] BACKGROUND_DAY_TIME_IMAGES
++ <<Create>> FightScene()
 + void initscene()
 - void setBackground()
 - String getRandomImagePath()
@@ -175,15 +195,22 @@ class scenes.fightscene.FightScene {
 
 
 class animation.grandda.LeftAttack {
++ <<Create>> LeftAttack()
 }
+
 class animation.grandda.LeftWalk {
++ <<Create>> LeftWalk()
 }
+
 class animation.grandda.RightAttack {
++ <<Create>> RightAttack()
 }
+
 class scenes.roomscene.RoomScene {
 - {static} double scaleFactor
 - {static} int ACTUAL_ROOM_SIZE
 - {static} double ROOM_SIZE
++ <<Create>> RoomScene()
 + void initscene()
 - void setBackground()
 - void initRooms()
@@ -211,6 +238,7 @@ class gui.PlayerModel {
 - double forcePX
 - double forceNX
 - boolean isShow
++ <<Create>> PlayerModel(ImageView)
 + void setDimensions(double,double)
 + void setModel(ImageView)
 + void clearModel()
@@ -257,13 +285,16 @@ class gui.PlayerModel {
 
 
 class animation.EditFleid {
++ <<Create>> EditFleid()
 - void createEditGrandMaGrid()
 - void createEditGrandDaGrid()
 - void removeEditGrid()
 }
 
 class animation.grandma.LeftWalk {
++ <<Create>> LeftWalk()
 }
+
 interface type.interfaces.Moveable {
 + void move(KeyCode)
 + void stop(KeyCode)
@@ -281,6 +312,7 @@ class animation.PlayerAnimation {
 - int attackCount
 - int animantionCount
 - int animantionDelay
++ <<Create>> PlayerAnimation(PlayerType)
 + void initModel(ImageView)
 + void initAnimantionThread()
 + void changeAnimantion()
@@ -306,6 +338,7 @@ class animation.PlayerAnimation {
 
 abstract class system.GameScene {
 - SceneLogic script
++ <<Create>> GameScene(SceneLogic)
 + SceneLogic getScript()
 + void setScript(SceneLogic)
 + {abstract}void initscene()
@@ -322,7 +355,9 @@ class scenes.roomscene.RoomLogic {
 }
 
 class animation.grandma.RightAttack {
++ <<Create>> RightAttack()
 }
+
 class gui.GameIcon {
 + {static} ImageView startButton(double)
 + {static} ImageView parseButton(double)
@@ -338,7 +373,9 @@ class gui.GameIcon {
 }
 
 class animation.grandma.DownStay {
++ <<Create>> DownStay()
 }
+
 class scenes.fightscene.FightLogic {
 - FightScene view
 + void setView(FightScene)
@@ -356,6 +393,7 @@ class player.GrandDa {
 + {static} double JUMP_POWER
 + {static} double KNOCKBACK
 + {static} int ANIMANTION_DELAY
++ <<Create>> GrandDa()
 + void move(KeyCode)
 + void jump(KeyCode)
 + void attack(KeyCode)
@@ -366,7 +404,9 @@ class player.GrandDa {
 
 
 class animation.grandma.LeftStay {
++ <<Create>> LeftStay()
 }
+
 abstract class animation.AnimationData {
 + String[] frames
 + int width
@@ -374,22 +414,34 @@ abstract class animation.AnimationData {
 + int offsetX
 + int offsetY
 + PlayerAction actionType
++ <<Create>> AnimationData(String[],int,int,int,int,PlayerAction)
 }
 
+
 class animation.grandda.DownWalk {
++ <<Create>> DownWalk()
 }
+
 class animation.grandma.RightStay {
++ <<Create>> RightStay()
 }
+
 class animation.grandda.UpWalk {
++ <<Create>> UpWalk()
 }
+
 class animation.grandda.DownStay {
++ <<Create>> DownStay()
 }
+
 interface type.interfaces.SceneLogic {
 ~ void update()
 }
 
 class animation.grandda.RightStay {
++ <<Create>> RightStay()
 }
+
 enum type.PlayerAction {
 +  UP_STAY
 +  UP_WALK
@@ -404,11 +456,17 @@ enum type.PlayerAction {
 }
 
 class animation.grandma.RightWalk {
++ <<Create>> RightWalk()
 }
+
 class animation.grandma.UpWalk {
++ <<Create>> UpWalk()
 }
+
 class animation.grandma.LeftAttack {
++ <<Create>> LeftAttack()
 }
+
 
 
 animation.AnimationData <|-- animation.grandma.DownWalk
