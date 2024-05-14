@@ -22,6 +22,7 @@ abstract public class Player implements Moveable {
         this.setPlayerSpeed(playerSpeed);
         this.setJumpPower(jumpPower);
         this.setKnockback(knockback);
+        this.initAnimation();
     }
 
     public double getPlayerSpeed() {
@@ -65,7 +66,7 @@ abstract public class Player implements Moveable {
         this.max_health = max_health;
     }
 
-    abstract void initAnimation();
+    abstract public void initAnimation();
 
     public abstract void setDefault();
 

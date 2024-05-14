@@ -1,10 +1,19 @@
 package animation;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Type;
+
 public class AnimationList {
     private AnimationNode head;
     private AnimationNode tail;
     private int duration;
     private AnimationNode current;
+
+    public static AnimationList fromAnimationData(AnimationData data) {
+        AnimationList list = new AnimationList();
+        list.addAnimation(data);
+        return list;
+    }
 
     public AnimationList() {
         this.head = null;
@@ -16,7 +25,7 @@ public class AnimationList {
         return head == null;
     }
 
-    public void addAFrame(String url,double width, double height,double layoutX, double layoutY) {
+    public void addFrame(String url,double width, double height,double layoutX, double layoutY) {
         AnimationNode newNode = new AnimationNode(url,width,height,layoutX,layoutY);
         if (isEmpty()) {
             head = newNode;
@@ -30,13 +39,13 @@ public class AnimationList {
         tail = newNode;
     }
 
-    public void addAnimation(String[] urls ,double width, double height,double layoutX, double layoutY) {
-        for (String url: urls) {
-            addAFrame(url,width,height,layoutX,layoutY);
+    public void addAnimation(AnimationData data) {
+        for (String url: data.frames) {
+            addFrame(url,data.width,data.height,data.offsetX,data.offsetY);
         }
     }
 
-    public void ResetNode() {
+    public void resetNode() {
         if (isEmpty()) {
             return;
         } else {

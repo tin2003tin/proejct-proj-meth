@@ -11,6 +11,7 @@ import type.interfaces.SceneLogic;
 
 public class SceneManager {
     private static Stage mainStage;
+    private static GameScene currentScene;
     private static Thread gameThread;
 
     public static void setStage(Stage stage) {
@@ -24,6 +25,7 @@ public class SceneManager {
         }
 
         Scene scene = new Scene(gameScene, 1000, 700);
+        currentScene = gameScene;
         mainStage.setScene(scene);
         mainStage.setTitle("GrandGame");
         mainStage.show();
@@ -58,5 +60,9 @@ public class SceneManager {
         player1.getPlayerAnimation().getModel().setLocation(PX1,PY1);
         player2.getPlayerAnimation().getModel().setLocation(PX2,PY2);
         gameScene.getChildren().addAll(player1.getPlayerAnimation().getModel(),player2.getPlayerAnimation().getModel());
+    }
+
+    public static GameScene getScene() {
+        return currentScene;
     }
 }

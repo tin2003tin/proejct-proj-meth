@@ -3,6 +3,7 @@ package scenes.fightscene;
 import gui.PlayerModel;
 import main.Main;
 import player.Player;
+import system.AudioManager;
 import type.PlayerDirection;
 import type.constant.Settings;
 import type.interfaces.SceneLogic;
@@ -15,6 +16,12 @@ public class FightLogic implements SceneLogic {
     private FightScene view;
     @Override
     public void update() {
+        if (Main.player1.getHealth() <= 0 || Main.player2.getHealth() <= 0) {
+            AudioManager.getInstance().playLoop("win");
+            view.endedScene();
+            Main.player1.setDefault();
+            Main.player2.setDefault();
+        }
         movePlayer(Main.player1);
         movePlayer(Main.player2);
         attackPlayer(Main.player1, Main.player2);
@@ -93,7 +100,7 @@ public class FightLogic implements SceneLogic {
             double distanceX = playerModel.getX() - oppositeModel.getX();
             double distanceY =  oppositeModel.getY() - playerModel.getY();
             if (distanceX > 30 && distanceX < 150 && distanceY > -100 && distanceY < 100) {
-
+                AudioManager.getInstance().playSingle("hit");
                 oppositeModel.setForceNX(10 * player.getKnockback());
                 opposite.setHealth((int) (opposite.getHealth() - player.getAttack()));
                 view.inithealthBars();
@@ -105,7 +112,7 @@ public class FightLogic implements SceneLogic {
             double distanceY =  oppositeModel.getY() - playerModel.getY();
 
             if (distanceX > 30 && distanceX < 150 && distanceY > -100 && distanceY <= 100) {
-
+                AudioManager.getInstance().playSingle("hit");
                 oppositeModel.setForcePX(10 * player.getKnockback());
                 opposite.setHealth((int) (opposite.getHealth() - player.getAttack()));
                 view.inithealthBars();

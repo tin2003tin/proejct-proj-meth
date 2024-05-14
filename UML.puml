@@ -1,4 +1,6 @@
 @startuml
+class animation.grandma.DownWalk {
+}
 class main.Main {
 + {static} Player player1
 + {static} Player player2
@@ -32,7 +34,7 @@ abstract class player.Player {
 + void setPlayerAnimation(PlayerAnimation)
 + int getMax_health()
 + void setMax_health(int)
-~ {abstract}void initAnimation()
++ {abstract}void initAnimation()
 + {abstract}void setDefault()
 + double getJumpPower()
 + void setJumpPower(double)
@@ -43,20 +45,6 @@ abstract class player.Player {
 }
 
 
-class gui.GameIcon {
-+ {static} ImageView startButton(double)
-+ {static} ImageView parseButton(double)
-+ {static} ImageView stopButton(double)
-+ {static} ImageView gameoverIcon(double,double)
-+ {static} ImageView newgameIcon(double)
-+ {static} ImageView fullHeart(int)
-+ {static} ImageView halfHeart(int)
-+ {static} ImageView emptyHeart(int)
-+ {static} ImageView redPotion(double)
-+ {static} ImageView bluePotion(double)
-+ {static} ImageView yellowPotion(double)
-}
-
 class type.constant.Settings {
 + {static} int DEFAULT_SCENE_WIDTH
 + {static} int DEFAULT_SCENE_HEIGHT
@@ -65,6 +53,8 @@ class type.constant.Settings {
 + {static} int GROUND_HEIGHT
 }
 
+class animation.grandda.RightWalk {
+}
 class player.GrandMa {
 + {static} int MAX_HEALTH
 + {static} double SPEED
@@ -76,34 +66,24 @@ class player.GrandMa {
 + void attack(KeyCode)
 + void jump(KeyCode)
 + void stop(KeyCode)
-~ void initAnimation()
++ void initAnimation()
 + void setDefault()
 }
 
 
-class scenes.fightscene.FightLogic {
-- FightScene view
-+ void setView(FightScene)
-+ void update()
-- void movePlayer(Player)
-- boolean canPlayerMove(Player,PlayerDirection,double)
-- void attackPlayer(Player,Player)
+class animation.grandma.UpStay {
 }
-
-
-class player.GrandDa {
-+ {static} int MAX_HEALTH
-+ {static} double SPEED
-+ {static} double ATTACK
-+ {static} double JUMP_POWER
-+ {static} double KNOCKBACK
-+ {static} int ANIMANTION_DELAY
-+ void move(KeyCode)
-+ void jump(KeyCode)
-+ void attack(KeyCode)
-+ void stop(KeyCode)
-~ void initAnimation()
-+ void setDefault()
+class system.AudioManager {
+- Hashtable<String,Media> audioData
+- MediaPlayer loopPlayer
+- {static} AudioManager instance
++ {static} AudioManager getInstance()
++ void loadAudio()
++ void addAudio(String,String)
++ Media getAudio(String)
++ void playSingle(String)
++ void playLoop(String)
++ void stopLoop()
 }
 
 
@@ -116,11 +96,13 @@ enum type.PlayerDirection {
 
 class system.SceneManager {
 - {static} Stage mainStage
+- {static} GameScene currentScene
 - {static} Thread gameThread
 + {static} void setStage(Stage)
 + {static} void moveScene(GameScene)
 + {static} void startSceneScript(SceneLogic)
 + {static} void addPlayerToScene(Pane,int,int,int,int)
++ {static} GameScene getScene()
 }
 
 
@@ -139,15 +121,18 @@ enum type.GameTime {
 +  DayLight
 }
 
+class animation.grandda.LeftStay {
+}
 class animation.AnimationList {
 - AnimationNode head
 - AnimationNode tail
 - int duration
 - AnimationNode current
++ {static} AnimationList fromAnimationData(AnimationData)
 + boolean isEmpty()
-+ void addAFrame(String,double,double,double,double)
-+ void addAnimation(String[],double,double,double,double)
-+ void ResetNode()
++ void addFrame(String,double,double,double,double)
++ void addAnimation(AnimationData)
++ void resetNode()
 + AnimationNode getNextAnimation()
 + int getDuration()
 + void setDuration(int)
@@ -170,6 +155,8 @@ class animation.AnimationNode {
 }
 
 
+class animation.grandda.UpStay {
+}
 class scenes.fightscene.FightScene {
 - HealthBar healthBar1
 - HealthBar healthBar2
@@ -182,28 +169,17 @@ class scenes.fightscene.FightScene {
 - void initChangeSceneButton()
 + void inithealthBars()
 + void setPlayerListener()
-~ void endedScene()
++ void endedScene()
 - void initBackButton()
 }
 
 
-interface type.interfaces.SceneLogic {
-~ void update()
+class animation.grandda.LeftAttack {
 }
-
-enum type.PlayerAction {
-+  UP_STAY
-+  UP_WALK
-+  DOWN_STAY
-+  DOWN_WALK
-+  RIGHT_STAY
-+  RIGHT_WALK
-+  LEFT_STAY
-+  LEFT_WALK
-+  RIGHT_ATTACK
-+  LEFT_ATTACK
+class animation.grandda.LeftWalk {
 }
-
+class animation.grandda.RightAttack {
+}
 class scenes.roomscene.RoomScene {
 - {static} double scaleFactor
 - {static} int ACTUAL_ROOM_SIZE
@@ -286,6 +262,8 @@ class animation.EditFleid {
 - void removeEditGrid()
 }
 
+class animation.grandma.LeftWalk {
+}
 interface type.interfaces.Moveable {
 + void move(KeyCode)
 + void stop(KeyCode)
@@ -307,6 +285,7 @@ class animation.PlayerAnimation {
 + void initAnimantionThread()
 + void changeAnimantion()
 + void setAnimation(PlayerAction)
++ void addPlayerAnimation(String[])
 + void addPlayerAnimation(PlayerAction,AnimationList)
 + PlayerType getPlayerType()
 + void setPlayerType(PlayerType)
@@ -342,20 +321,128 @@ class scenes.roomscene.RoomLogic {
 - boolean canPlayerMove(Player,PlayerDirection,double)
 }
 
+class animation.grandma.RightAttack {
+}
+class gui.GameIcon {
++ {static} ImageView startButton(double)
++ {static} ImageView parseButton(double)
++ {static} ImageView stopButton(double)
++ {static} ImageView gameoverIcon(double,double)
++ {static} ImageView newgameIcon(double)
++ {static} ImageView fullHeart(int)
++ {static} ImageView halfHeart(int)
++ {static} ImageView emptyHeart(int)
++ {static} ImageView redPotion(double)
++ {static} ImageView bluePotion(double)
++ {static} ImageView yellowPotion(double)
+}
+
+class animation.grandma.DownStay {
+}
+class scenes.fightscene.FightLogic {
+- FightScene view
++ void setView(FightScene)
++ void update()
+- void movePlayer(Player)
+- boolean canPlayerMove(Player,PlayerDirection,double)
+- void attackPlayer(Player,Player)
+}
 
 
+class player.GrandDa {
++ {static} int MAX_HEALTH
++ {static} double SPEED
++ {static} double ATTACK
++ {static} double JUMP_POWER
++ {static} double KNOCKBACK
++ {static} int ANIMANTION_DELAY
++ void move(KeyCode)
++ void jump(KeyCode)
++ void attack(KeyCode)
++ void stop(KeyCode)
++ void initAnimation()
++ void setDefault()
+}
+
+
+class animation.grandma.LeftStay {
+}
+abstract class animation.AnimationData {
++ String[] frames
++ int width
++ int height
++ int offsetX
++ int offsetY
++ PlayerAction actionType
+}
+
+class animation.grandda.DownWalk {
+}
+class animation.grandma.RightStay {
+}
+class animation.grandda.UpWalk {
+}
+class animation.grandda.DownStay {
+}
+interface type.interfaces.SceneLogic {
+~ void update()
+}
+
+class animation.grandda.RightStay {
+}
+enum type.PlayerAction {
++  UP_STAY
++  UP_WALK
++  DOWN_STAY
++  DOWN_WALK
++  RIGHT_STAY
++  RIGHT_WALK
++  LEFT_STAY
++  LEFT_WALK
++  RIGHT_ATTACK
++  LEFT_ATTACK
+}
+
+class animation.grandma.RightWalk {
+}
+class animation.grandma.UpWalk {
+}
+class animation.grandma.LeftAttack {
+}
+
+
+animation.AnimationData <|-- animation.grandma.DownWalk
 javafx.application.Application <|-- main.Main
 javafx.scene.layout.Pane <|-- gui.ControlGrid
 type.interfaces.Moveable <|.. player.Player
+animation.AnimationData <|-- animation.grandda.RightWalk
 player.Player <|-- player.GrandMa
-type.interfaces.SceneLogic <|.. scenes.fightscene.FightLogic
-player.Player <|-- player.GrandDa
+animation.AnimationData <|-- animation.grandma.UpStay
 javafx.scene.layout.Pane <|-- gui.Room
 javafx.scene.layout.HBox <|-- gui.HealthBar
+animation.AnimationData <|-- animation.grandda.LeftStay
+animation.AnimationData <|-- animation.grandda.UpStay
 system.GameScene <|-- scenes.fightscene.FightScene
+animation.AnimationData <|-- animation.grandda.LeftAttack
+animation.AnimationData <|-- animation.grandda.LeftWalk
+animation.AnimationData <|-- animation.grandda.RightAttack
 system.GameScene <|-- scenes.roomscene.RoomScene
 javafx.scene.layout.Pane <|-- gui.PlayerModel
 javafx.scene.layout.Pane <|-- animation.EditFleid
+animation.AnimationData <|-- animation.grandma.LeftWalk
 javafx.scene.layout.Pane <|-- system.GameScene
 type.interfaces.SceneLogic <|.. scenes.roomscene.RoomLogic
+animation.AnimationData <|-- animation.grandma.RightAttack
+animation.AnimationData <|-- animation.grandma.DownStay
+type.interfaces.SceneLogic <|.. scenes.fightscene.FightLogic
+player.Player <|-- player.GrandDa
+animation.AnimationData <|-- animation.grandma.LeftStay
+animation.AnimationData <|-- animation.grandda.DownWalk
+animation.AnimationData <|-- animation.grandma.RightStay
+animation.AnimationData <|-- animation.grandda.UpWalk
+animation.AnimationData <|-- animation.grandda.DownStay
+animation.AnimationData <|-- animation.grandda.RightStay
+animation.AnimationData <|-- animation.grandma.RightWalk
+animation.AnimationData <|-- animation.grandma.UpWalk
+animation.AnimationData <|-- animation.grandma.LeftAttack
 @enduml

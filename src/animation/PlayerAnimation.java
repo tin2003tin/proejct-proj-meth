@@ -3,6 +3,9 @@ package animation;
 import gui.PlayerModel;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
+import scenes.roomscene.RoomScene;
+import system.AudioManager;
+import system.SceneManager;
 import type.PlayerAction;
 import type.PlayerDirection;
 import type.PlayerType;
@@ -66,7 +69,7 @@ public class PlayerAnimation {
                         this.attackCount++;
                     } else {
                         this.getModel().setLeftAttacking(false);
-                        this.getAnimationMap().get(PlayerAction.LEFT_ATTACK).ResetNode();
+                        this.getAnimationMap().get(PlayerAction.LEFT_ATTACK).resetNode();
                         this.attackCount = 0;
                         this.animantionCount = 100;
                         this.getModel().setMoveDistanceX(this.getModel().getMoveDistanceX() * 2);
@@ -83,7 +86,7 @@ public class PlayerAnimation {
                         this.attackCount++;
                     } else {
                         this.getModel().setRightAttacking(false);
-                        this.getAnimationMap().get(PlayerAction.RIGHT_ATTACK).ResetNode();
+                        this.getAnimationMap().get(PlayerAction.RIGHT_ATTACK).resetNode();
                         this.attackCount = 0;
                         this.animantionCount = 100;
                         this.getModel().setMoveDistanceX(this.getModel().getMoveDistanceX() * 2);
@@ -97,6 +100,10 @@ public class PlayerAnimation {
                             if (this.animantionCount > 4) {
                                 this.setAnimation(PlayerAction.DOWN_WALK);
                                 this.animantionCount = 0;
+                                if (this.getModel().isOnGround()
+                                        || SceneManager.getScene() instanceof RoomScene) {
+                                    AudioManager.getInstance().playSingle("walk");
+                                }
                             }
                         } else {
                             if (this.animantionCount > 40) {
@@ -111,6 +118,10 @@ public class PlayerAnimation {
                             if (this.animantionCount > 4) {
                                 this.setAnimation(PlayerAction.UP_WALK);
                                 this.animantionCount = 0;
+                                if (this.getModel().isOnGround()
+                                        || SceneManager.getScene() instanceof RoomScene) {
+                                    AudioManager.getInstance().playSingle("walk");
+                                }
                             }
                         } else {
                             if (this.animantionCount > 40) {
@@ -124,6 +135,10 @@ public class PlayerAnimation {
                             if (this.animantionCount > 4) {
                                 this.setAnimation(PlayerAction.LEFT_WALK);
                                 this.animantionCount = 0;
+                                if (this.getModel().isOnGround()
+                                        || SceneManager.getScene() instanceof RoomScene) {
+                                    AudioManager.getInstance().playSingle("walk");
+                                }
                             }
                         } else {
                             if (this.animantionCount > 40) {
@@ -138,6 +153,10 @@ public class PlayerAnimation {
                             if (this.animantionCount > 4) {
                                 this.setAnimation(PlayerAction.RIGHT_WALK);
                                 this.animantionCount = 0;
+                                if (this.getModel().isOnGround()
+                                        || SceneManager.getScene() instanceof RoomScene) {
+                                    AudioManager.getInstance().playSingle("walk");
+                                }
                             }
                         } else {
                             if (this.animantionCount > 40) {
@@ -158,9 +177,21 @@ public class PlayerAnimation {
         });
     }
 
+    public void addPlayerAnimation(String[] animationDataClass) {
+        try {
+            for (String className: animationDataClass) {
+                AnimationData animationData = (AnimationData) Class.forName(className).getConstructor().newInstance();
+                this.addPlayerAnimation(animationData.actionType,AnimationList.fromAnimationData(animationData));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addPlayerAnimation(PlayerAction playerAction,AnimationList animationList) {
         this.animationMap.put(playerAction,animationList);
     }
+
     public PlayerType getPlayerType() {
         return playerType;
     }

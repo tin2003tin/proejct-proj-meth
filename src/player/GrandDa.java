@@ -1,8 +1,11 @@
 // Player.java
 package player;
 
+import animation.AnimationData;
 import animation.AnimationList;
+import animation.grandda.*;
 import javafx.scene.input.KeyCode;
+import player.Player;
 import type.PlayerAction;
 import type.PlayerDirection;
 import type.PlayerType;
@@ -18,8 +21,13 @@ public class GrandDa extends Player {
     public static int ANIMANTION_DELAY = 25;
     public GrandDa() {
        super(PlayerType.GrandDa,MAX_HEALTH,MAX_HEALTH,SPEED,JUMP_POWER,KNOCKBACK);
-       this.initAnimation();
-        super.getPlayerAnimation().initModel(super.getPlayerAnimation().getAnimationMap().get(PlayerAction.DOWN_STAY).getCurrent().getImageView());
+       super.getPlayerAnimation()
+               .initModel(
+                       super.getPlayerAnimation()
+                               .getAnimationMap()
+                               .get(PlayerAction.DOWN_STAY)
+                               .getCurrent()
+                               .getImageView());
     }
 
     @Override
@@ -87,150 +95,21 @@ public class GrandDa extends Player {
         }
     }
     @Override
-     void initAnimation() {
-        AnimationList downStayList = new AnimationList();
-        downStayList.addAnimation(
+     public void initAnimation() {
+        super.getPlayerAnimation().addPlayerAnimation(
                 new String[] {
-                        "/player/grandDa/down-stay/1.png",
-                        "/player/grandDa/down-stay/2.png"
-                },
-                170,
-                170,
-                0,
-                0
+                        "animation.grandda.DownStay",
+                        "animation.grandda.DownWalk",
+                        "animation.grandda.UpStay",
+                        "animation.grandda.UpWalk",
+                        "animation.grandda.LeftStay",
+                        "animation.grandda.LeftWalk",
+                        "animation.grandda.RightStay",
+                        "animation.grandda.RightWalk",
+                        "animation.grandda.RightAttack",
+                        "animation.grandda.LeftAttack"
+                }
         );
-        super.getPlayerAnimation().addPlayerAnimation(PlayerAction.DOWN_STAY,downStayList);
-
-        AnimationList downWalkList = new AnimationList();
-        downWalkList.addAnimation(
-                new String[] {
-                        "/player/grandDa/down-walk/1.png",
-                        "/player/grandDa/down-walk/2.png",
-                        "/player/grandDa/down-walk/3.png",
-                        "/player/grandDa/down-walk/4.png"
-                },
-                170,
-                170,
-                0,
-                0
-        );
-        super.getPlayerAnimation().addPlayerAnimation(PlayerAction.DOWN_WALK,downWalkList);
-
-        AnimationList upStayList = new AnimationList();
-        upStayList.addAnimation(
-                new String[] {
-                        "/player/grandDa/up-stay/1.png",
-                        "/player/grandDa/up-stay/2.png"
-                },
-                170,
-                170,
-                0,
-                0
-        );
-        super.getPlayerAnimation().addPlayerAnimation(PlayerAction.UP_STAY,upStayList);
-
-        AnimationList upWalkList = new AnimationList();
-        upWalkList.addAnimation(
-                new String[] {
-                        "/player/grandDa/up-walk/1.png",
-                        "/player/grandDa/up-walk/2.png",
-                        "/player/grandDa/up-walk/3.png",
-                        "/player/grandDa/up-walk/4.png"
-                },
-                170,
-                170,
-                0,
-                0
-        );
-        super.getPlayerAnimation().addPlayerAnimation(PlayerAction.UP_WALK,upWalkList);
-
-        AnimationList leftStayList = new AnimationList();
-        leftStayList.addAnimation(
-                new String[] {
-                        "/player/grandDa/left-stay/1.png",
-                        "/player/grandDa/left-stay/2.png"
-                },
-                170,
-                170,
-                0,
-                0
-        );
-        super.getPlayerAnimation().addPlayerAnimation(PlayerAction.LEFT_STAY,leftStayList);
-
-        AnimationList leftWalkList = new AnimationList();
-        leftWalkList.addAnimation(
-                new String[] {
-                        "/player/grandDa/left-walk/1.png",
-                        "/player/grandDa/left-walk/2.png",
-                        "/player/grandDa/left-walk/3.png",
-                        "/player/grandDa/left-walk/4.png"
-                },
-                170,
-                170,
-                0,
-                0
-        );
-        super.getPlayerAnimation().addPlayerAnimation(PlayerAction.LEFT_WALK,leftWalkList);
-
-        AnimationList rightStayList = new AnimationList();
-        rightStayList.addAnimation(
-                new String[] {
-                        "/player/grandDa/right-stay/1.png",
-                        "/player/grandDa/right-stay/2.png"
-                },
-                170,
-                170,
-                0,
-                0
-        );
-        super.getPlayerAnimation().addPlayerAnimation(PlayerAction.RIGHT_STAY,rightStayList);
-
-        AnimationList rightWalkList = new AnimationList();
-        rightWalkList.addAnimation(
-                new String[] {
-                        "/player/grandDa/right-walk/1.png",
-                        "/player/grandDa/right-walk/2.png",
-                        "/player/grandDa/right-walk/3.png",
-                        "/player/grandDa/right-walk/4.png"
-                },
-                170,
-                170,
-                0,
-                0
-        );
-        super.getPlayerAnimation().addPlayerAnimation(PlayerAction.RIGHT_WALK,rightWalkList);
-
-        AnimationList rightAttackList = new AnimationList();
-        rightAttackList.addAnimation(
-                new String[] {
-                        "/player/grandDa/right-attack/1.png",
-                        "/player/grandDa/right-attack/2.png",
-                        "/player/grandDa/right-attack/3.png",
-                        "/player/grandDa/right-attack/4.png",
-                        "/player/grandDa/right-attack/5.png"
-                },
-                190,
-                190,
-                25,
-                -18
-        );
-        super.getPlayerAnimation().addPlayerAnimation(PlayerAction.RIGHT_ATTACK,rightAttackList);
-
-        AnimationList leftAttackList = new AnimationList();
-        leftAttackList.addAnimation(
-                new String[] {
-                        "/player/grandDa/left-attack/1.png",
-                        "/player/grandDa/left-attack/2.png",
-                        "/player/grandDa/left-attack/3.png",
-                        "/player/grandDa/left-attack/4.png",
-                        "/player/grandDa/left-attack/5.png"
-                },
-                190,
-                190,
-                -45,
-                -18
-        );
-        super.getPlayerAnimation().addPlayerAnimation(PlayerAction.LEFT_ATTACK,leftAttackList);
     }
 
     @Override

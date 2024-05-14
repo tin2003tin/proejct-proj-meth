@@ -7,6 +7,7 @@ import player.GrandDa;
 import player.GrandMa;
 import player.Player;
 import scenes.roomscene.RoomScene;
+import system.AudioManager;
 import system.SceneManager;
 import type.GameTime;
 
@@ -18,6 +19,7 @@ public class Main extends Application {
 	public static GameTime gameTime = GameTime.DayLight;
 	@Override
 	public void start(Stage primaryStage) {
+		AudioManager.getInstance().loadAudio();
 		SceneManager.setStage(primaryStage);
 		SceneManager.moveScene(new RoomScene());
 	}

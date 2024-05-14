@@ -4,6 +4,7 @@ import animation.EditFleid;
 import gui.ControlGrid;
 import gui.Room;
 import scenes.roomscene.RoomLogic;
+import system.AudioManager;
 import system.GameScene;
 import system.SceneManager;
 import type.constant.Settings;
@@ -18,7 +19,6 @@ public class RoomScene extends GameScene {
 
     private static final double scaleFactor = 0.75;
     private static final int ACTUAL_ROOM_SIZE = 600;
-
     private static final double ROOM_SIZE = ACTUAL_ROOM_SIZE * scaleFactor;
 
     public RoomScene() {
@@ -36,6 +36,7 @@ public class RoomScene extends GameScene {
         Main.player1.getPlayerAnimation().setAnimantionDelay(25);
         Main.player2.getPlayerAnimation().setAnimantionDelay(25);
         this.initEditButton();
+        AudioManager.getInstance().playLoop("RoomScene");
     }
 
     private void setBackground() {

@@ -2,8 +2,8 @@ package scenes.fightscene;
 
 
 import gui.HealthBar;
-import gui.PlayerModel;
 import scenes.roomscene.RoomScene;
+import system.AudioManager;
 import system.GameScene;
 import system.SceneManager;
 import type.constant.Settings;
@@ -22,7 +22,6 @@ import main.Main;
 import player.GrandMa;
 import player.Player;
 import type.GameTime;
-import type.PlayerDirection;
 
 import java.util.Random;
 
@@ -59,6 +58,7 @@ public class FightScene extends GameScene {
         Main.player2.setDefault();
         this.inithealthBars();
         this.initChangeSceneButton();
+        AudioManager.getInstance().playLoop("FightScene");
     }
 
     private void setBackground() {
@@ -157,6 +157,7 @@ public class FightScene extends GameScene {
                 if (!((Player)player1).getPlayerAnimation().getModel().isRightAttacking() && !((Player)player1).getPlayerAnimation().getModel().isLeftAttacking() ) {
                     ((Player) player1).getPlayerAnimation().getModel().setMoveDistanceX(((Player) player1).getPlayerAnimation().getModel().getMoveDistanceX()/2);
                     player1.attack(keyCode);
+                    AudioManager.getInstance().playSingle("ma_swing");
                 }
             }
 
@@ -164,6 +165,7 @@ public class FightScene extends GameScene {
                 if (!((Player)player2).getPlayerAnimation().getModel().isRightAttacking() && !((Player)player2).getPlayerAnimation().getModel().isLeftAttacking() ) {
                     ((Player) player2).getPlayerAnimation().getModel().setMoveDistanceX(((Player) player2).getPlayerAnimation().getModel().getMoveDistanceX()/2);
                     player2.attack(keyCode);
+                    AudioManager.getInstance().playSingle("da_swing");
                 }
             }
 
@@ -183,9 +185,7 @@ public class FightScene extends GameScene {
         this.requestFocus();
     }
 
-
-
-    void endedScene() {
+    public void endedScene() {
         String sentence = "";
         if (Main.player1.getHealth() == 0 ) {
             if (Main.player1 instanceof GrandMa) {
@@ -218,7 +218,6 @@ public class FightScene extends GameScene {
             this.initBackButton();
         });
     }
-
 
     private void initBackButton() {
         Button changeSceneButton = new Button("Back");
